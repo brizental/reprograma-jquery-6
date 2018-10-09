@@ -8,7 +8,7 @@ function getUniqueRandomIndexesIn2DArray(table, indexes) {
         var random_cell = Math.floor(Math.random() * WIDTH);
         var random_row = Math.floor(Math.random() *  HEIGHT);
         for (var j = 0; j < indexes.length; j++) {
-            if (indexes[j][0] === random_rowl &&
+            if (indexes[j][0] === random_row &&
                 indexes[j][1] === random_cell) {
                 return arguments.callee(table, indexes);
             }
