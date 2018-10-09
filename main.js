@@ -8,8 +8,8 @@ function getUniqueRandomIndexesIn2DArray(table, indexes) {
         var random_cell = Math.floor(Math.random() * WIDTH);
         var random_row = Math.floor(Math.random() *  HEIGHT);
         for (var j = 0; j < indexes.length; j++) {
-            if (indexes[j][0] === random_cell &&
-                indexes[j][1] === random_row) {
+            if (indexes[j][0] === random_rowl &&
+                indexes[j][1] === random_cell) {
                 return arguments.callee(table, indexes);
             }
         }
@@ -50,6 +50,7 @@ for (var i = 0; i < HEIGHT; i++) {
     field.append(row);
     field_matrix.push(row_vector);  
 }
+
 
 var mine_indexes = getUniqueRandomIndexesIn2DArray(field_matrix);
 $.each(mine_indexes, function(index, coordinates) {
