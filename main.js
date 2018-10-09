@@ -6,16 +6,16 @@ function getUniqueRandomIndexesIn2DArray(table, indexes) {
     indexes = indexes ? indexes : [];
     for (var i = indexes.length; i < MINES; i++) {
         var random_cell = Math.floor(Math.random() * WIDTH);
-        var random_row = Math.floor(Math.random() * HEIGHT);
+        var random_row = Math.floor(Math.random() *  HEIGHT);
         for (var j = 0; j < indexes.length; j++) {
-            if (indexes[j][0] === random_cell &&
-                indexes[j][1] === random_row) {
+            if (indexes[j][0] === random_row &&
+                indexes[j][1] === random_cell) {
                 return arguments.callee(table, indexes);
             }
         }
-        indexes.push([random_cell, random_row]);
+        indexes.push([random_row, random_cell]);
     }
-    return indexes;
+    return indexes;   
 }
 
 function getAdjacentCellIndexes(x, y) {
@@ -30,7 +30,7 @@ function getAdjacentCellIndexes(x, y) {
         [ x + 1, y + 1 ]
     ], function (element) {
         return element[0] >= 0 && element[1] >= 0
-            && element[0] < WIDTH && element[0] < HEIGHT
+            && element[1] < WIDTH && element[0] < HEIGHT
     });
 }
 
@@ -42,13 +42,15 @@ for (var i = 0; i < HEIGHT; i++) {
     for (var j = 0; j < WIDTH; j++) {
         var mine = $("<td>");
         mine.data("mines", 0);
-
+        
         row.append(mine);
         row_vector.push(mine)
     }
+    console.log(field_matrix)
     field.append(row);
-    field_matrix.push(row_vector);
+    field_matrix.push(row_vector);  
 }
+
 
 var mine_indexes = getUniqueRandomIndexesIn2DArray(field_matrix);
 $.each(mine_indexes, function(index, coordinates) {
@@ -59,11 +61,12 @@ $.each(mine_indexes, function(index, coordinates) {
 });
 
 $.each(mine_indexes, function (index, coordinates) {
-    var adjacent_cells = getAdjacentCellIndexes(coordinates[1], coordinates[0]);
+    var adjacent_cells = getAdjacentCellIndexes(coordinates[0], coordinates[1]);
     $.each(adjacent_cells, function(index, coordinates) {
         var x = coordinates[0];
         var y = coordinates[1];
         var cell = $(field_matrix[x][y]);
+        console.log(cell)
         if (!cell.hasClass("mine")) {
             var num_mines = cell.data("mines") + 1;
             cell.data("mines", num_mines);
@@ -105,3 +108,4 @@ $.each(field_matrix, function(index, row) {
         }
     });
 });
+
