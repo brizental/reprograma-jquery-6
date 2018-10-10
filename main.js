@@ -50,7 +50,7 @@ window.onload = jogoCampoMinado(1)
 
 //função que cria o jogo
 function jogoCampoMinado(level_selected) {
-    
+    //array para criar
     MINES = LEVELS[level_selected][1];
     HEIGHT = LEVELS[level_selected][0];
     WIDTH = LEVELS[level_selected][0]
