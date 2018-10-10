@@ -29,6 +29,71 @@ body {
     }
 }
 
+.level{
+    width: 15%;
+    padding: 10px 5px;
+    flex-direction: column;
+    position: fixed;
+    background: $windows-light-gray;
+    z-index: 99;
+    a {
+        padding: 5px;
+        position: relative;
+        top:0;
+        left:0;
+        text-decoration: none;
+        display: flex;
+        margin-right: 10px;
+        &:hover {
+            background-color: $windows-blue;
+            color: white;
+        }
+    }
+}
+
+.window-easy{
+    background-color: $windows-light-gray;
+    border: 2px outset darkgray;
+    margin: auto;
+    padding: 3px;
+    width: 240px;
+    font-size: 14px; 
+}
+.window-header {
+    background-color: $windows-blue;
+    font-weight: bold;
+    padding: 5px;
+
+    p {
+        color: white;
+    }
+}
+
+.window-controls {
+    padding: 10px 5px;
+
+    a {
+        text-decoration: none;
+        display: inline-block;
+        margin-right: 10px;
+
+        &:hover {
+            background-color: $windows-blue;
+            color: white;
+        }
+    }
+}
+
+
+.window-hard {
+    background-color: $windows-light-gray;
+    border: 2px outset darkgray;
+    margin: auto;
+    padding: 3px;
+    width: 480px;
+    font-size: 14px;
+}
+
 #footer {
     background-color: $windows-light-gray;
     position: absolute;
@@ -56,31 +121,7 @@ body {
     padding: 3px;
     width: 480px;
     font-size: 14px;
-
-    .window-header {
-        background-color: $windows-blue;
-        font-weight: bold;
-        padding: 5px;
-
-        p {
-            color: white;
-        }
-    }
-
-    .window-controls {
-        padding: 10px 5px;
-
-        a {
-            text-decoration: none;
-            display: inline-block;
-            margin-right: 10px;
-
-            &:hover {
-                background-color: $windows-blue;
-                color: white;
-            }
-        }
-    }
+    transition: all .8s;
 }
 
 #game {
