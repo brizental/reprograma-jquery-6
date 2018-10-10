@@ -1,14 +1,14 @@
 
 var level = $(".level")
-var table = $("table");
-var janela = $(".window");
+var table = $("#field table");
+var gameBox = $(".window");
 
 //array com dados dos levels 
 var LEVELS =[[8,10],[16,40],[24,99]];
 
 
 //escuta pelo clique no menu e mostra a lista de levels
-$(".jogo").on( "mouseover", function(event){
+$("#menu").on( "mouseover", function(event){
     event.preventDefault()
     level.css("display", "flex");    
 })
@@ -17,17 +17,17 @@ $(".easy").on("click", function(event){
     event.preventDefault()
     level.css("display", "none");
     table.empty()
-    jogoCampoMinado(0)
-    janela.css("width", "240px")
-    $(".board").css("width", "45px")
+    minedFieldGame(0)
+    gameBox.css("width", "240px")
+    $(".board").css("width", "70px")
 })
 
 $(".medium").on("click", function(event){
     event.preventDefault()
     level.css("display", "none");
     table.empty()
-    jogoCampoMinado(1)
-    janela.css("width", "480px")
+    minedFieldGame(1)
+    gameBox.css("width", "480px")
     $(".board").css("width", "100px")
 })
 
@@ -35,9 +35,9 @@ $(".hard").on("click", function(event){
     event.preventDefault()
     level.css("display", "none");
     table.empty()
-   jogoCampoMinado(2)
-   janela.css("width", "742px");
-   $(".board").css("width", "200px")
+    minedFieldGame(2)
+    gameBox.css("width", "742px");
+    $(".board").css("width", "200px")
 })
 
 // $(".window").on( "mouseout", function(event){
@@ -46,10 +46,10 @@ $(".hard").on("click", function(event){
 // })
 
 //função para criar jogo por default
-window.onload = jogoCampoMinado(1)
+minedFieldGame(1)
 
 //função que cria o jogo
-function jogoCampoMinado(level_selected) {
+function minedFieldGame(level_selected) {
     //array para criar
     MINES = LEVELS[level_selected][1];
     HEIGHT = LEVELS[level_selected][0];
@@ -67,7 +67,7 @@ function jogoCampoMinado(level_selected) {
         }
         table.empty()
         $("#timer").text("");
-        jogoCampoMinado(level_selected)
+        minedFieldGame(level_selected)
         
     });
     
