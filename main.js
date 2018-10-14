@@ -4,18 +4,21 @@ var table = $("#field table");
 var gameBox = $(".window");
 
 //array com dados dos levels 
-var LEVELS =[[8,10],[16,40],[24,99]];
+var LEVELS =[[8,1],[16,40],[24,99]];
 
 
 //escuta pelo clique no menu e mostra a lista de levels
-$("#menu").on( "mouseover", function(event){
-    event.preventDefault()
-    level.css("display", "flex");    
-})
+$(".level").hover(
+    function() {
+        $(".level a").show();
+    }, 
+    function () {
+        $(".level a").hide();
+    }
+);
 
 $(".easy").on("click", function(event){
     event.preventDefault()
-    level.css("display", "none");
     table.empty()
     minedFieldGame(0)
     gameBox.css("width", "240px")
@@ -24,7 +27,6 @@ $(".easy").on("click", function(event){
 
 $(".medium").on("click", function(event){
     event.preventDefault()
-    level.css("display", "none");
     table.empty()
     minedFieldGame(1)
     gameBox.css("width", "480px")
@@ -33,7 +35,6 @@ $(".medium").on("click", function(event){
 
 $(".hard").on("click", function(event){
     event.preventDefault()
-    level.css("display", "none");
     table.empty()
     minedFieldGame(2)
     gameBox.css("width", "742px");
@@ -57,18 +58,11 @@ function minedFieldGame(level_selected) {
     TIMER = false;
 
     $("#reset").on("click",function(event){
-        if ($(this).hasClass("game-over")){
-            $(this).removeClass("game-over")
-        }else if ($(this).hasClass("wow")){
-            $(this).removeClass("wow")
-        }
-        else{
-            clearInterval(TIMER)
-        }
+        $(this).removeClass("game-over wow winner")
+        clearInterval(TIMER)
         table.empty()
-        $("#timer").text("");
-        minedFieldGame(level_selected)
-        
+        $(".board").text("");
+        minedFieldGame(level_selected);
     });
     
         function getUniqueRandomIndexesIn2DArray(table, indexes) {
@@ -168,6 +162,23 @@ function minedFieldGame(level_selected) {
         
                         if ($("td .button").length === MINES) {
                             $("#reset").addClass("winner");
+                            
+                            var winnerName = prompt("Nome da gloriosa, maravilhosa, magnânima:");
+                            $.ajax({
+                                method:"POST",
+                                url: "https://campo-minado.herokuapp.com/save",
+                                contentType:"application/json",
+                                dataType:"json",
+                                data: JSON.stringify({
+                                    timestamp: Date.now(),
+                                    name: winnerName,
+                                    score:counter
+                                })
+                            })
+                            .done(function(data){
+                            console.log("data",data);    
+                            })
+                            
                             clearInterval(TIMER);
                         }
         
@@ -242,3 +253,18 @@ function minedFieldGame(level_selected) {
         });
     }
        
+
+    $.ajax("https://campo-minado.herokuapp.com/get")
+    .done(function(data){
+       for (let i = 0; i < 30; i++){
+            data.sort(function(a,b){
+                if( a.score > b.score) {
+                    return a.score;
+                }
+            })
+            console.log(data)
+       $("ul").append(`<li>user: ${data[i].name} | score: ${data[i].score} | time: ${data[i].timestamp}`);
+        }
+    })
+    
+//Enviar dados do vencedor
