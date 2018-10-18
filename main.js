@@ -6,7 +6,6 @@ var gameBox = $(".window");
 //array com dados dos levels 
 var LEVELS =[[8,1],[16,40],[24,99]];
 
-
 //escuta pelo clique no menu e mostra a lista de levels
 $(".level").hover(
     function() {
@@ -15,8 +14,7 @@ $(".level").hover(
     function () {
         $(".level a").hide();
     }
-);
-
+)
 $(".easy").on("click", function(event){
     event.preventDefault()
     table.empty()
@@ -24,7 +22,6 @@ $(".easy").on("click", function(event){
     gameBox.css("width", "240px")
     $(".board").css("width", "70px")
 })
-
 $(".medium").on("click", function(event){
     event.preventDefault()
     table.empty()
@@ -40,15 +37,12 @@ $(".hard").on("click", function(event){
     gameBox.css("width", "742px");
     $(".board").css("width", "200px")
 })
-
 // $(".window").on( "mouseout", function(event){
 //     event.preventDefault()
 //     level.css("display", "none");
 // })
-
 //função para criar jogo por default
 minedFieldGame(1)
-
 //função que cria o jogo
 function minedFieldGame(level_selected) {
     //array para criar
@@ -177,11 +171,9 @@ function minedFieldGame(level_selected) {
                             })
                             .done(function(data){
                             console.log("data",data);    
-                            })
-                            
+                            }) 
                             clearInterval(TIMER);
                         }
-        
                     }
                 })
         
@@ -189,12 +181,11 @@ function minedFieldGame(level_selected) {
                 row.append(mine);
                 row_vector.push(mine)
             }
-            
+
             field.append(row);
             field_matrix.push(row_vector);  
         }
-        
-        
+                
         var mine_indexes = getUniqueRandomIndexesIn2DArray(field_matrix);
         $.each(mine_indexes, function(index, coordinates) {
             var x = coordinates[0];
@@ -252,8 +243,7 @@ function minedFieldGame(level_selected) {
             });
         });
     }
-       
-
+    
     $.ajax("https://campo-minado.herokuapp.com/get")
     .done(function(data){
        for (let i = 0; i < 30; i++){
@@ -266,5 +256,3 @@ function minedFieldGame(level_selected) {
        $("ul").append(`<li>user: ${data[i].name} | score: ${data[i].score} | time: ${data[i].timestamp}`);
         }
     })
-    
-//Enviar dados do vencedor
