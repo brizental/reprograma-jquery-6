@@ -4,27 +4,26 @@ var table = $("#field table");
 var gameBox = $(".window");
 
 //array com dados dos levels 
-var LEVELS =[[8,10],[16,40],[24,99]];
-
+var LEVELS =[[8,1],[16,40],[24,99]];
 
 //escuta pelo clique no menu e mostra a lista de levels
-$("#menu").on( "mouseover", function(event){
-    event.preventDefault()
-    level.css("display", "flex");    
-})
-
+$(".level").hover(
+    function() {
+        $(".level a").show();
+    }, 
+    function () {
+        $(".level a").hide();
+    }
+)
 $(".easy").on("click", function(event){
     event.preventDefault()
-    level.css("display", "none");
     table.empty()
     minedFieldGame(0)
     gameBox.css("width", "240px")
     $(".board").css("width", "70px")
 })
-
 $(".medium").on("click", function(event){
     event.preventDefault()
-    level.css("display", "none");
     table.empty()
     minedFieldGame(1)
     gameBox.css("width", "480px")
@@ -33,21 +32,17 @@ $(".medium").on("click", function(event){
 
 $(".hard").on("click", function(event){
     event.preventDefault()
-    level.css("display", "none");
     table.empty()
     minedFieldGame(2)
     gameBox.css("width", "742px");
     $(".board").css("width", "200px")
 })
-
 // $(".window").on( "mouseout", function(event){
 //     event.preventDefault()
 //     level.css("display", "none");
 // })
-
 //função para criar jogo por default
 minedFieldGame(1)
-
 //função que cria o jogo
 function minedFieldGame(level_selected) {
     //array para criar
@@ -57,18 +52,11 @@ function minedFieldGame(level_selected) {
     TIMER = false;
 
     $("#reset").on("click",function(event){
-        if ($(this).hasClass("game-over")){
-            $(this).removeClass("game-over")
-        }else if ($(this).hasClass("wow")){
-            $(this).removeClass("wow")
-        }
-        else{
-            clearInterval(TIMER)
-        }
+        $(this).removeClass("game-over wow winner")
+        clearInterval(TIMER)
         table.empty()
-        $("#timer").text("");
-        minedFieldGame(level_selected)
-        
+        $(".board").text("");
+        minedFieldGame(level_selected);
     });
     
         function getUniqueRandomIndexesIn2DArray(table, indexes) {
@@ -168,9 +156,24 @@ function minedFieldGame(level_selected) {
         
                         if ($("td .button").length === MINES) {
                             $("#reset").addClass("winner");
+                            
+                            var winnerName = prompt("Nome da gloriosa, maravilhosa, magnânima:");
+                            $.ajax({
+                                method:"POST",
+                                url: "https://campo-minado.herokuapp.com/save",
+                                contentType:"application/json",
+                                dataType:"json",
+                                data: JSON.stringify({
+                                    timestamp: Date.now(),
+                                    name: winnerName,
+                                    score:counter
+                                })
+                            })
+                            .done(function(data){
+                            console.log("data",data);    
+                            }) 
                             clearInterval(TIMER);
                         }
-        
                     }
                 })
         
@@ -178,12 +181,11 @@ function minedFieldGame(level_selected) {
                 row.append(mine);
                 row_vector.push(mine)
             }
-            
+
             field.append(row);
             field_matrix.push(row_vector);  
         }
-        
-        
+                
         var mine_indexes = getUniqueRandomIndexesIn2DArray(field_matrix);
         $.each(mine_indexes, function(index, coordinates) {
             var x = coordinates[0];
@@ -241,4 +243,16 @@ function minedFieldGame(level_selected) {
             });
         });
     }
-       
+    
+    $.ajax("https://campo-minado.herokuapp.com/get")
+    .done(function(data){
+       for (let i = 0; i < 30; i++){
+            data.sort(function(a,b){
+                if( a.score > b.score) {
+                    return a.score;
+                }
+            })
+            console.log(data)
+       $("ul").append(`<li>user: ${data[i].name} | score: ${data[i].score} | time: ${data[i].timestamp}`);
+        }
+    })

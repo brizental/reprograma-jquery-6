@@ -2,36 +2,43 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Campo Minado</title>
+    <title>Campo Minado</title>
+    <link href="https://fonts.googleapis.com/css?family=Orbitron" rel="stylesheet"> 
 	<link rel="stylesheet" href="./main.css">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E=" crossorigin="anonymous"></script>
+    <script
+			  src="https://code.jquery.com/jquery-3.3.1.min.js"
+			  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+			  crossorigin="anonymous"></script>
 </head>
 <body>
-    <div class="window">
-        <div class="window-header">
-            <p>Campo Minado</p>
-        </div>
-        <div class="window-controls">
-            <a href="" id='menu'>Jogo</a>
-            <a href="">Ajuda</a>
-            <div class="level">
-                <a href="" class="easy">Fácil</a>
-                <a href="" class="medium">Intermediário</a>
-                <a href="" class="hard">Avançado</a>
+    <div class="total">
+        <div class="window">
+            <div class="window-header">
+                <p>Campo Minado</p>
             </div>
-
-        </div>
-        <div id="game">
-            <div id="header">
-                <div class="board" id="mines"></div>
-                <div class="button" id="reset"></div>
-                <div class="board" id="timer"></div>
+            <div class="window-controls">
+                <a href="" id='menu'>Jogo</a>
+                <a href="">Ajuda</a>
+                <div class="level">
+                    <a href="" class="on easy">Fácil</a>
+                    <a href="" class="on medium">Intermediário</a>
+                    <a href="" class="on hard">Avançado</a>
+                </div>
+           </div>
+            <div id="game">
+                <div id="header">
+                    <div class="board" id="mines"></div>
+                    <div class="button" id="reset"></div>
+                    <div class="board" id="timer"></div>
+                </div>
+                <div id="field">
+                    <table></table>
+                </div>
             </div>
-            <div id="field">
-                <table></table>
             </div>
-        </div>
-    </div>
+        <ul id="list">
+        </ul>
+   </div>
     <div id="footer">
         <div class="button">
             <img src="./imgs/icons/start-button.png">
